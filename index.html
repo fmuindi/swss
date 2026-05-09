@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sidewalk Sunday School — Kids Harvest · World Harvest Church</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome 6 Free -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+  /* ============================================================
+     DESIGN TOKENS — identical to Kids Harvest parent page
+  ============================================================ */
+  :root {
+    --gold:        #c9a84c;
+    --gold-glow:   rgba(201,168,76,.35);
+    --dark:        #0d0d0d;
+    --dark-mid:    #181818;
+    --dark-card:   #202020;
+    --cream:       #fdf6ec;
+    --red:         #e02b3f;
+    --red-dark:    #b01e30;
+    --red-glow:    rgba(224,43,63,.35);
+    --yellow:      #ffcc00;
+    --teal:        #00b4a6;
+    --teal-glow:   rgba(0,180,166,.3);
+    --purple:      #7c3aed;
+    --purple-glow: rgba(124,58,237,.35);
+    --white:       #ffffff;
+    --text-lt:     rgba(255,255,255,.82);
+    --text-md:     rgba(255,255,255,.52);
+    --radius-sm:   8px;
+    --radius:      14px;
+    --radius-lg:   22px;
+    --radius-xl:   32px;
+    --f-display: 'Baloo 2', cursive;
+    --f-body:    'Nunito', sans-serif;
+    --f-ui:      'DM Sans', sans-serif;
+    --ease: cubic-bezier(.4,0,.2,1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--f-body);
+    background: var(--dark);
+    color: var(--white);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  a   { color: inherit; text-decoration: none; }
+  ul  { list-style: none; }
+
+  /* ============================================================
+     LAYOUT
+  ============================================================ */
+  .container {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  @media (min-width: 640px)  { .container { padding: 0 24px; } }
+  @media (min-width: 1024px) { .container { padding: 0 32px; } }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--f-ui);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+
+  /* ============================================================
+     BUTTONS — uniform height & min-width enforced
+  ============================================================ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 44px;
+    min-width: 160px;
+    padding: 0 22px;
+    border-radius: 100px;
+    font-family: var(--f-body);
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    white-space: nowrap;
+    transition: transform .18s var(--ease), box-shadow .18s var(--ease),
+                background .18s var(--ease), border-color .18s var(--ease);
+    will-change: transform;
+    flex-shrink: 0;
+    text-align: center;
+  }
+  @media (min-width: 768px) { .btn { height: 48px; padding: 0 26px; font-size: 15px; } }
+  .btn:hover  { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-gold         { background: var(--gold);   color: var(--dark);  }
+  .btn-gold:hover   { box-shadow: 0 8px 28px var(--gold-glow); }
+
+  .btn-red          { background: var(--red);    color: var(--white); }
+  .btn-red:hover    { background: var(--red-dark); box-shadow: 0 8px 28px var(--red-glow); }
+
+  .btn-teal         { background: var(--teal);   color: var(--white); }
+  .btn-teal:hover   { box-shadow: 0 8px 28px var(--teal-glow); }
+
+  .btn-outline      { background: transparent; color: var(--white); border-color: rgba(255,255,255,.32); }
+  .btn-outline:hover{ border-color: var(--white); background: rgba(255,255,255,.07); }
+
+  .btn-outline-dark { background: transparent; color: var(--dark); border-color: rgba(0,0,0,.22); }
+  .btn-outline-dark:hover { border-color: var(--dark); background: rgba(0,0,0,.06); }
+
+  /* btn-group: wraps buttons, ensures equal width on mobile */
+  .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+  /* On narrow screens, stretch buttons to same full width */
+  @media (max-width: 480px) {
+    .btn-group { flex-direction: column; }
+    .btn-group .btn { width: 100%; min-width: unset; }
+  }
+
+  /* ============================================================
+     SCROLL-REVEAL
+  ============================================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .65s var(--ease), transform .65s var(--ease);
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-left  { transform: translateX(-24px); }
+  .reveal-right { transform: translateX(24px); }
+  .reveal-left.visible,
+  .reveal-right.visible { transform: none; }
+
+  .stagger > * {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .5s var(--ease), transform .5s var(--ease);
+  }
+  .stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:.04s; }
+  .stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:.10s; }
+  .stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:.16s; }
+  .stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:.22s; }
+  .stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:.28s; }
+  .stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay:.34s; }
+
+  /* ============================================================
+     TOP BAR — identical to parent
+  ============================================================ */
+  .top-bar {
+    background: var(--dark-mid);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    font-family: var(--f-ui);
+    font-size: 11.5px;
+    color: var(--text-md);
+    padding: 7px 0;
+  }
+  .top-bar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .top-bar a:hover { color: var(--gold); transition: color .15s; }
+
+  /* ============================================================
+     NAV — identical to parent
+  ============================================================ */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    background: rgba(13,13,13,.94);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    transition: background .3s var(--ease);
+  }
+  .nav .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    gap: 12px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .nav-logo img { height: 34px; width: auto; }
+  .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .nav-logo-text .mn { font-family: var(--f-display); font-size: 15.5px; font-weight: 800; }
+  .nav-logo-text .ms { font-family: var(--f-ui); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-top: 2px; }
+
+  .nav-links { display: none; align-items: center; gap: 2px; flex: 1; justify-content: center; }
+  @media (min-width: 1024px) { .nav-links { display: flex; } }
+  .nav-links a {
+    font-family: var(--f-ui);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-lt);
+    padding: 6px 11px;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    transition: color .15s, background .15s;
+  }
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--white); background: rgba(255,255,255,.07); }
+  .nav-links a.hl     { color: var(--red); font-weight: 700; }
+  .nav-links a.hl.active,
+  .nav-links a.hl:hover { background: rgba(224,43,63,.1); color: var(--red); }
+
+  .nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+  .nav-home-link {
+    display: none;
+    font-family: var(--f-ui);
+    font-size: 12px;
+    color: var(--text-md);
+    padding: 5px 10px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: var(--radius-sm);
+    transition: color .15s, border-color .15s;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+  }
+  @media (min-width: 768px) { .nav-home-link { display: flex; } }
+  .nav-home-link:hover { color: var(--gold); border-color: var(--gold); }
+
+  .nav-cta { display: none; }
+  @media (min-width: 640px) {
+    .nav-cta { display: inline-flex; height: 38px; padding: 0 16px; font-size: 13px; min-width: unset; }
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 10px 8px;
+    background: none;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @media (min-width: 1024px) { .hamburger { display: none; } }
+  .hamburger span {
+    display: block;
+    width: 22px; height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: transform .28s var(--ease), opacity .18s;
+  }
+  .hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.is-open span:nth-child(2) { opacity: 0; }
+  .hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .drawer-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    z-index: 998;
+    backdrop-filter: blur(2px);
+  }
+  .drawer-overlay.is-open { display: block; }
+
+  .mobile-drawer {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: min(300px, 88vw);
+    background: var(--dark-mid);
+    z-index: 999;
+    transform: translateX(100%);
+    transition: transform .3s var(--ease);
+    padding: 22px 18px 36px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    box-shadow: -10px 0 48px rgba(0,0,0,.5);
+  }
+  .mobile-drawer.is-open { transform: translateX(0); }
+
+  .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+  .drawer-close {
+    background: rgba(255,255,255,.08);
+    border: none; color: var(--white);
+    font-size: 16px; cursor: pointer;
+    width: 34px; height: 34px;
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s;
+  }
+  .drawer-close:hover { background: rgba(255,255,255,.15); }
+  .drawer-links { display: flex; flex-direction: column; gap: 3px; margin-bottom: auto; }
+  .drawer-links a {
+    font-family: var(--f-body); font-size: 15.5px; font-weight: 700;
+    color: var(--text-lt); padding: 11px 12px; border-radius: var(--radius-sm);
+    transition: background .15s, color .15s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .drawer-links a:hover { background: rgba(255,255,255,.07); color: var(--white); }
+  .drawer-links a.hl    { color: var(--red); }
+  .drawer-links a i     { width: 18px; text-align: center; }
+  .drawer-ctas { display: flex; flex-direction: column; gap: 8px; margin-top: 24px; }
+  .drawer-ctas .btn { width: 100%; min-width: unset; }
+
+  /* ============================================================
+     PAGE BREADCRUMB BANNER
+  ============================================================ */
+  .page-banner {
+    background: linear-gradient(135deg, #1a0008 0%, var(--dark) 60%);
+    border-bottom: 1px solid rgba(224,43,63,.18);
+    padding: 56px 0 52px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-banner::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(224,43,63,.12) 0%, transparent 70%);
+    top: -180px; right: -120px;
+    pointer-events: none;
+  }
+  .banner-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: .12;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .page-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 60% 40%, rgba(224,43,63,.08) 0%, transparent 60%);
+    opacity: 1;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .page-banner .container { position: relative; z-index: 1; }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--f-ui);
+    font-size: 12px;
+    color: var(--text-md);
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .breadcrumb a { transition: color .15s; }
+  .breadcrumb a:hover { color: var(--gold); }
+  .breadcrumb .sep { color: rgba(255,255,255,.2); }
+  .breadcrumb .current { color: var(--red); font-weight: 600; }
+
+  .banner-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(224,43,63,.14);
+    border: 1px solid rgba(224,43,63,.3);
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-family: var(--f-ui);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 18px;
+    animation: fadeUp .7s var(--ease) .15s both;
+  }
+  .banner-title {
+    font-family: var(--f-display);
+    font-size: clamp(32px, 6vw, 70px);
+    font-weight: 800;
+    line-height: 1.0;
+    color: var(--white);
+    margin-bottom: 16px;
+    animation: fadeUp .7s var(--ease) .3s both;
+  }
+  .banner-title .accent {
+    background: linear-gradient(120deg, var(--red), var(--yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .banner-sub {
+    font-size: clamp(14px, 2vw, 17px);
+    color: var(--text-lt);
+    max-width: 580px;
+    line-height: 1.7;
+    font-weight: 600;
+    margin-bottom: 32px;
+    animation: fadeUp .7s var(--ease) .45s both;
+  }
+  .banner-ctas { animation: fadeUp .7s var(--ease) .6s both; }
+
+  /* Floating particles */
+  .particles { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+  .particle  { position: absolute; border-radius: 50%; animation: riseUp linear infinite; }
+  @keyframes riseUp {
+    0%   { opacity: .55; transform: translateY(0) scale(1); }
+    80%  { opacity: .2; }
+    100% { opacity: 0;   transform: translateY(-800px) scale(.5); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ============================================================
+     WHAT IS SWSS — two-column
+  ============================================================ */
+  .what-is {
+    background: var(--cream);
+    color: var(--dark);
+    padding: 72px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (min-width: 768px) { .what-is { padding: 96px 0; } }
+  .what-is::before {
+    content: '';
+    position: absolute;
+    width: 460px; height: 460px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(224,43,63,.06), transparent 70%);
+    bottom: -160px; left: -100px;
+    pointer-events: none;
+  }
+  .what-is .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 44px;
+    align-items: center;
+  }
+  @media (min-width: 900px) { .what-is .container { grid-template-columns: 1fr 1fr; gap: 64px; } }
+
+  .wi-label { color: var(--red) !important; }
+  .wi-heading {
+    font-family: var(--f-display);
+    font-size: clamp(26px, 4.5vw, 46px);
+    font-weight: 800;
+    color: var(--dark);
+    line-height: 1.1;
+    margin-bottom: 18px;
+  }
+  .wi-heading em { font-style: normal; color: var(--red); }
+  .wi-body { font-size: 15px; line-height: 1.78; color: #3a3a3a; margin-bottom: 18px; }
+
+  .wi-highlight {
+    background: linear-gradient(135deg, rgba(224,43,63,.08) 0%, rgba(201,168,76,.06) 100%);
+    border-left: 3px solid var(--red);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .wi-highlight p { font-size: 15px; font-weight: 700; color: var(--dark); font-style: italic; line-height: 1.65; }
+
+  /* image stack reuse */
+  .img-stack { position: relative; height: 380px; }
+  @media (min-width: 768px) { .img-stack { height: 450px; } }
+  .img-stack img {
+    position: absolute;
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+    box-shadow: 0 18px 48px rgba(0,0,0,.15);
+  }
+  .img-stack .im { width: 76%; height: 86%; top: 0; right: 0; }
+  .img-stack .is { width: 50%; height: 54%; bottom: 0; left: 0; border: 4px solid var(--cream); }
+  .img-stack .it { width: 40%; height: 36%; bottom: 10px; right: -6px; border: 3px solid var(--cream); z-index: 2; }
+  .stack-bubble {
+    position: absolute;
+    top: 16px; left: -8px;
+    background: var(--red);
+    color: var(--white);
+    border-radius: var(--radius);
+    padding: 10px 15px;
+    font-family: var(--f-display);
+    font-size: 12.5px;
+    font-weight: 800;
+    z-index: 3;
+    box-shadow: 0 8px 22px var(--red-glow);
+    line-height: 1.3;
+  }
+  .stack-bubble strong { font-size: 21px; display: block; }
+
+  /* ============================================================
+     WHAT TO EXPECT — feature cards
+  ============================================================ */
+  .what-expect { background: var(--dark-mid); padding: 72px 0; }
+  @media (min-width: 768px) { .what-expect { padding: 96px 0; } }
+
+  .sh-center { text-align: center; margin-bottom: 52px; }
+  .sec-h {
+    font-family: var(--f-display);
+    font-size: clamp(24px, 4vw, 44px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .sec-sub { font-size: 15px; color: var(--text-lt); max-width: 480px; margin: 0 auto; line-height: 1.65; }
+
+  .feat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (min-width: 600px)  { .feat-grid { grid-template-columns: repeat(3,1fr); } }
+  @media (min-width: 960px)  { .feat-grid { grid-template-columns: repeat(5,1fr); gap: 16px; } }
+
+  .feat-card {
+    background: var(--dark-card);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: var(--radius-lg);
+    padding: 26px 20px 24px;
+    text-align: center;
+    transition: transform .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .feat-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(224,43,63,.28);
+    box-shadow: 0 14px 38px rgba(0,0,0,.22);
+  }
+  .feat-ico {
+    width: 52px; height: 52px;
+    border-radius: 15px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin: 0 auto 16px;
+    transition: transform .2s;
+  }
+  .feat-card:hover .feat-ico { transform: scale(1.1) rotate(-4deg); }
+  .feat-title { font-family: var(--f-display); font-size: 15px; font-weight: 800; color: var(--white); margin-bottom: 8px; line-height: 1.2; }
+  .feat-body  { font-size: 12.5px; color: var(--text-lt); line-height: 1.6; }
+
+  /* ============================================================
+     COMMUNITY IMPACT — dark full-bleed with image
+  ============================================================ */
+  .impact {
+    position: relative;
+    background: var(--dark);
+    padding: 80px 0;
+    overflow: hidden;
+  }
+  .impact-bg {
+    position: absolute;
+    inset: 0;
+    background: url('https://ik.imagekit.io/vddpcxj7e/vbs/ChatGPT%20Image%20Apr%2029%2C%202026%2C%2003_25_48%20PM.png?tr=f-auto,q-auto,w-1400') center/cover no-repeat;
+    opacity: .09;
+  }
+  .impact-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(13,13,13,.97) 0%, rgba(13,13,13,.8) 100%);
+  }
+  .impact .container { position: relative; z-index: 1; }
+
+  .impact-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (min-width: 900px) { .impact-inner { grid-template-columns: 1fr 1fr; gap: 64px; } }
+
+  .impact-text .section-label { color: var(--red); }
+  .impact-h {
+    font-family: var(--f-display);
+    font-size: clamp(26px, 4vw, 46px);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 18px;
+  }
+  .impact-h em { font-style: normal; color: var(--yellow); }
+  .impact-body { font-size: 15px; color: var(--text-lt); line-height: 1.78; margin-bottom: 20px; }
+  .impact-quote {
+    border-left: 3px solid var(--red);
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--text-lt);
+    line-height: 1.65;
+    margin-bottom: 30px;
+  }
+
+  .impact-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (min-width: 480px) { .impact-stats { grid-template-columns: repeat(2, 1fr); } }
+  .stat-card {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: var(--radius-lg);
+    padding: 22px 18px;
+    text-align: center;
+    transition: border-color .3s, background .3s;
+  }
+  .stat-card:hover { border-color: rgba(224,43,63,.3); background: rgba(224,43,63,.05); }
+  .stat-num  { font-family: var(--f-display); font-size: 36px; font-weight: 800; color: var(--red); line-height: 1; margin-bottom: 6px; }
+  .stat-lbl  { font-family: var(--f-ui); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-md); }
+
+  .impact-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 12px;
+  }
+  .impact-images img {
+    border-radius: var(--radius);
+    width: 100%;
+    object-fit: cover;
+    transition: transform .3s var(--ease);
+  }
+  .impact-images img:hover { transform: scale(1.02); }
+  .ii-tall  { height: 220px; grid-row: span 2; }
+  .ii-short { height: 100px; }
+  @media (min-width: 768px) { .ii-tall { height: 280px; } .ii-short { height: 128px; } }
+
+  /* ============================================================
+     SCROLLING GALLERY STRIP
+  ============================================================ */
+  .gallery-strip { background: var(--dark); overflow: hidden; }
+  .gallery-track {
+    display: flex;
+    gap: 10px;
+    animation: scrollX 40s linear infinite;
+    width: max-content;
+    padding: 16px 0;
+  }
+  .gallery-track:hover { animation-play-state: paused; }
+  @keyframes scrollX {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .gallery-track img {
+    height: 180px;
+    width: auto;
+    border-radius: var(--radius);
+    object-fit: cover;
+    flex-shrink: 0;
+    transition: transform .3s var(--ease);
+    cursor: zoom-in;
+  }
+  .gallery-track img:hover { transform: scale(1.04); }
+  @media (min-width: 768px) { .gallery-track img { height: 230px; } }
+
+  /* ============================================================
+     VOLUNTEER
+  ============================================================ */
+  .volunteer {
+    background: var(--cream);
+    color: var(--dark);
+    padding: 72px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (min-width: 768px) { .volunteer { padding: 96px 0; } }
+  .volunteer::after {
+    content: '';
+    position: absolute;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,.07), transparent 70%);
+    bottom: -120px; right: -80px;
+    pointer-events: none;
+  }
+  .volunteer .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 44px;
+    align-items: start;
+  }
+  @media (min-width: 900px) { .volunteer .container { grid-template-columns: 1fr 1fr; gap: 64px; } }
+
+  .vol-label { color: var(--red) !important; }
+  .vol-h {
+    font-family: var(--f-display);
+    font-size: clamp(26px, 4.5vw, 46px);
+    font-weight: 800;
+    color: var(--dark);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .vol-h em { font-style: normal; color: var(--red); }
+  .vol-body { font-size: 15px; line-height: 1.78; color: #3a3a3a; margin-bottom: 24px; }
+
+  .role-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  @media (min-width: 480px) { .role-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .role-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(224,43,63,.08);
+    border: 1px solid rgba(224,43,63,.18);
+    border-radius: 100px;
+    padding: 8px 14px;
+    font-family: var(--f-ui);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--dark);
+    transition: background .2s, border-color .2s, transform .2s;
+    white-space: nowrap;
+  }
+  .role-pill:hover {
+    background: rgba(224,43,63,.14);
+    border-color: rgba(224,43,63,.4);
+    transform: translateY(-2px);
+  }
+  .role-pill i { color: var(--red); font-size: 11px; flex-shrink: 0; }
+
+  .vol-contact {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.07);
+    margin-bottom: 28px;
+  }
+  .vol-contact h4 {
+    font-family: var(--f-display);
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 14px;
+  }
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    font-size: 14px;
+    color: #444;
+  }
+  .contact-row:last-child { border-bottom: none; }
+  .contact-row i { color: var(--red); width: 18px; text-align: center; flex-shrink: 0; }
+  .contact-row a { color: var(--red); font-weight: 700; }
+  .contact-row a:hover { text-decoration: underline; }
+
+  .vol-image img {
+    border-radius: var(--radius-xl);
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    box-shadow: 0 24px 60px rgba(0,0,0,.14);
+  }
+  @media (min-width: 768px) { .vol-image img { height: 480px; } }
+  .vol-image-caption {
+    text-align: center;
+    font-size: 13px;
+    color: #777;
+    margin-top: 12px;
+    font-style: italic;
+  }
+
+  /* ============================================================
+     EVENT SCHEDULE
+  ============================================================ */
+  .schedule { background: var(--dark-mid); padding: 72px 0; }
+  @media (min-width: 768px) { .schedule { padding: 96px 0; } }
+
+  .sched-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 44px;
+  }
+  .sched-h {
+    font-family: var(--f-display);
+    font-size: clamp(24px, 4vw, 44px);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .sched-h em { font-style: normal; color: var(--gold); }
+  .sched-sub { font-size: 14.5px; color: var(--text-lt); max-width: 440px; line-height: 1.62; }
+
+  .sched-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+
+  .sched-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--dark-card);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: var(--radius-lg);
+    padding: 18px 22px;
+    transition: border-color .3s, transform .25s var(--ease), box-shadow .25s;
+    cursor: default;
+  }
+  .sched-item:hover {
+    border-color: rgba(224,43,63,.3);
+    transform: translateX(4px);
+    box-shadow: 0 8px 30px rgba(0,0,0,.18);
+  }
+  .sched-date-box {
+    flex-shrink: 0;
+    width: 58px;
+    text-align: center;
+    background: var(--red);
+    border-radius: var(--radius-sm);
+    padding: 8px 6px;
+  }
+  .sdate-month {
+    font-family: var(--f-ui);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.75);
+    line-height: 1;
+  }
+  .sdate-day {
+    font-family: var(--f-display);
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+  }
+  .sdate-year {
+    font-family: var(--f-ui);
+    font-size: 9px;
+    color: rgba(255,255,255,.6);
+    line-height: 1.4;
+  }
+  .sched-info { flex: 1; min-width: 0; }
+  .sched-name {
+    font-family: var(--f-display);
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sched-loc {
+    font-family: var(--f-ui);
+    font-size: 12.5px;
+    color: var(--text-md);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+  .sched-loc i { color: var(--red); flex-shrink: 0; }
+  .sched-badge {
+    margin-left: auto;
+    flex-shrink: 0;
+    background: rgba(224,43,63,.14);
+    border: 1px solid rgba(224,43,63,.25);
+    color: var(--red);
+    font-family: var(--f-ui);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  @media (max-width: 480px) {
+    .sched-item  { flex-wrap: wrap; gap: 12px; }
+    .sched-badge { display: none; }
+    .sched-name  { white-space: normal; }
+  }
+
+  /* ============================================================
+     PHOTO / VIDEO SECTION
+  ============================================================ */
+  .media-section { background: var(--dark); padding: 72px 0; }
+  @media (min-width: 768px) { .media-section { padding: 96px 0; } }
+
+  .media-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 36px;
+  }
+  @media (min-width: 768px) { .media-grid { grid-template-columns: 1fr 1fr; gap: 24px; } }
+
+  .media-video-wrap {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    box-shadow: 0 20px 56px rgba(0,0,0,.5);
+    background: var(--dark-mid);
+  }
+  .media-video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+
+  .media-photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .media-photo-grid img {
+    border-radius: var(--radius);
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    transition: transform .3s var(--ease);
+    cursor: zoom-in;
+  }
+  @media (min-width: 768px) { .media-photo-grid img { height: 170px; } }
+  .media-photo-grid img:hover { transform: scale(1.03); }
+  .media-photo-grid .span2 { grid-column: span 2; height: 180px; }
+  @media (min-width: 768px) { .media-photo-grid .span2 { height: 220px; } }
+
+  .media-section-h {
+    font-family: var(--f-display);
+    font-size: clamp(24px, 4vw, 44px);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .media-section-h em { font-style: normal; color: var(--yellow); }
+  .media-sub { font-size: 15px; color: var(--text-lt); max-width: 480px; margin: 0 auto; line-height: 1.65; }
+
+  /* ============================================================
+     DONATE
+  ============================================================ */
+  .donate {
+    background: linear-gradient(145deg, #1a0008 0%, var(--dark-mid) 100%);
+    border-top: 1px solid rgba(224,43,63,.14);
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .donate::before {
+    content: '';
+    position: absolute;
+    width: 560px; height: 560px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(224,43,63,.1), transparent 70%);
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .donate-icon {
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, var(--red), var(--yellow));
+    border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    color: var(--white);
+    margin: 0 auto 22px;
+    box-shadow: 0 10px 32px var(--red-glow);
+    animation: iconPulse 3s ease-in-out infinite;
+    position: relative; z-index: 1;
+  }
+  @keyframes iconPulse {
+    0%, 100% { box-shadow: 0 10px 32px var(--red-glow); transform: scale(1); }
+    50%       { box-shadow: 0 16px 48px var(--red-glow); transform: scale(1.05); }
+  }
+  .donate-h {
+    font-family: var(--f-display);
+    font-size: clamp(26px, 5vw, 52px);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 14px;
+    position: relative; z-index: 1;
+  }
+  .donate-h em { font-style: normal; color: var(--yellow); }
+  .donate-sub {
+    font-size: clamp(14px, 2vw, 16.5px);
+    color: var(--text-lt);
+    max-width: 500px;
+    margin: 0 auto 32px;
+    line-height: 1.68;
+    position: relative; z-index: 1;
+  }
+  .donate-quote {
+    font-style: italic;
+    font-size: 15px;
+    color: var(--text-md);
+    max-width: 420px;
+    margin: 0 auto 32px;
+    line-height: 1.65;
+    position: relative; z-index: 1;
+  }
+
+  /* ============================================================
+     FINAL CTA
+  ============================================================ */
+  .final-cta {
+    background: linear-gradient(145deg, var(--dark) 0%, #110506 100%);
+    border-top: 1px solid rgba(201,168,76,.14);
+    padding: 88px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,.08), transparent 70%);
+    left: 50%; top: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+  }
+  .fc-h {
+    font-family: var(--f-display);
+    font-size: clamp(26px, 5vw, 54px);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 14px;
+    position: relative; z-index: 1;
+  }
+  .fc-h em { font-style: normal; color: var(--yellow); }
+  .fc-sub {
+    font-size: clamp(14px, 2vw, 16.5px);
+    color: var(--text-lt);
+    max-width: 480px;
+    margin: 0 auto 32px;
+    line-height: 1.65;
+    position: relative; z-index: 1;
+  }
+  .fc-btns { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; position: relative; z-index: 1; }
+
+  /* ============================================================
+     FOOTER — identical to parent
+  ============================================================ */
+  footer {
+    background: #080808;
+    border-top: 1px solid rgba(255,255,255,.05);
+    padding: 52px 0 30px;
+    font-family: var(--f-ui);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    margin-bottom: 26px;
+  }
+  @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; } }
+
+  .footer-brand img  { height: 36px; width: auto; margin-bottom: 12px; }
+  .footer-brand p    { font-size: 12px; color: var(--text-md); line-height: 1.65; margin-bottom: 16px; }
+  .socials           { display: flex; gap: 7px; flex-wrap: wrap; }
+  .social-btn {
+    width: 33px; height: 33px;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,.07);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    transition: background .15s, transform .15s;
+  }
+  .social-btn:hover { background: rgba(255,255,255,.14); transform: translateY(-2px); }
+
+  .footer-col h5 {
+    font-size: 9.5px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 13px;
+  }
+  .footer-col ul  { display: flex; flex-direction: column; gap: 8px; }
+  .footer-col a   { font-size: 12.5px; color: var(--text-md); transition: color .15s; }
+  .footer-col a:hover { color: var(--white); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 11.5px;
+    color: var(--text-md);
+  }
+  .footer-bottom a:hover { color: var(--gold); }
+  .footer-tagline {
+    text-align: center;
+    font-family: var(--f-display);
+    font-size: 12.5px;
+    color: rgba(255,255,255,.18);
+    padding-top: 20px;
+    font-weight: 700;
+    letter-spacing: .04em;
+  }
+  </style>
+</head>
+<body>
+
+<!-- ======== TOP BAR ======== -->
+<div class="top-bar">
+  <div class="container">
+    <span><i class="fas fa-location-dot"></i> 4595 Gender Rd., Canal Winchester, OH &nbsp;·&nbsp; <a href="tel:6148371990">(614) 837-1990</a></span>
+    <span><i class="fas fa-clock"></i> Sun 10 AM · Wed 7 PM &nbsp;·&nbsp; <a href="https://fmuindi.github.io/whc-2/"><i class="fas fa-arrow-left fa-xs"></i> WHC Home</a></span>
+  </div>
+</div>
+
+<!-- ======== NAV ======== -->
+<nav class="nav" id="mainNav">
+  <div class="container">
+    <a href="kids-harvest.html" class="nav-logo">
+      <img src="https://elro-images.s3.us-east-2.amazonaws.com/tosm/WHC+Wheat+Logo+(1).png" alt="World Harvest Church" />
+      <div class="nav-logo-text">
+        <span class="mn">Kids Harvest</span>
+        <span class="ms">Clubhouse · WHC</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="kids-harvest.html#about">About</a></li>
+      <li><a href="kids-harvest.html#expect">Experience</a></li>
+      <li><a href="kids-harvest.html#max-me">Max &amp; Me</a></li>
+      <li><a href="sidewalk-sunday-school.html" class="hl active"><i class="fas fa-map-pin fa-xs"></i> Sidewalk SS</a></li>
+      <li><a href="gen-h-678.html" class="hl"><i class="fas fa-bolt fa-xs"></i> GEN H 678</a></li>
+      <li><a href="kids-harvest.html#parents">Parents</a></li>
+      <li><a href="kids-harvest.html#media">Watch</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="kids-harvest.html" class="nav-home-link"><i class="fas fa-arrow-left"></i> Kids Harvest</a>
+      <a href="#join-event" class="btn btn-red nav-cta"><i class="fas fa-calendar-check"></i> Join Next Event</a>
+      <button class="hamburger" id="hamBtn" aria-label="Open navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ======== MOBILE DRAWER ======== -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-label="Navigation menu">
+  <div class="drawer-header">
+    <img src="https://elro-images.s3.us-east-2.amazonaws.com/tosm/WHC+Wheat+Logo+(1).png" alt="WHC" style="height:30px;" />
+    <button class="drawer-close" id="drawerClose" aria-label="Close menu"><i class="fas fa-xmark"></i></button>
+  </div>
+  <nav class="drawer-links">
+    <a href="kids-harvest.html"><i class="fas fa-arrow-left"></i>Kids Harvest Home</a>
+    <a href="kids-harvest.html#about"><i class="fas fa-circle-info"></i>About</a>
+    <a href="kids-harvest.html#expect"><i class="fas fa-star"></i>Experience</a>
+    <a href="kids-harvest.html#max-me"><i class="fas fa-child-reaching"></i>Max &amp; Me</a>
+    <a href="sidewalk-sunday-school.html" class="hl"><i class="fas fa-map-pin"></i>Sidewalk Sunday School</a>
+    <a href="gen-h-678.html" class="hl"><i class="fas fa-bolt"></i>GEN H 678</a>
+    <a href="kids-harvest.html#parents"><i class="fas fa-people-group"></i>Parents</a>
+    <a href="kids-harvest.html#media"><i class="fab fa-youtube"></i>Watch Online</a>
+  </nav>
+  <div class="drawer-ctas">
+    <a href="#join-event"  class="btn btn-red"><i class="fas fa-calendar-check"></i> Join Next Event</a>
+    <a href="#volunteer"   class="btn btn-outline"><i class="fas fa-hands-helping"></i> Volunteer With Us</a>
+  </div>
+</div>
+
+<!-- ======== PAGE BANNER / HERO ======== -->
+<section class="page-banner" id="home">
+  <video class="banner-video" autoplay muted loop playsinline
+    poster="https://ik.imagekit.io/vddpcxj7e/vbs/ChatGPT%20Image%20Apr%2029%2C%202026%2C%2003_28_03%20PM.png?tr=f-auto,q-auto,w-1400">
+    <source src="https://ik.imagekit.io/vddpcxj7e/vbs/Video.mov?tr=w-1200" type="video/mp4" />
+  </video>
+  <div class="particles" id="particleBox"></div>
+  <div class="container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="https://fmuindi.github.io/whc-2/"><i class="fas fa-house fa-xs"></i> WHC</a>
+      <span class="sep"><i class="fas fa-chevron-right fa-xs"></i></span>
+      <a href="kids-harvest.html">Kids Harvest</a>
+      <span class="sep"><i class="fas fa-chevron-right fa-xs"></i></span>
+      <span class="current">Sidewalk Sunday School</span>
+    </div>
+
+    <!-- <div class="banner-tag"><i class="fas fa-map-pin fa-xs"></i> Community Outreach · Kids Harvest</div> -->
+
+    <h1 class="banner-title">
+      Bringing Church<br />
+      <span class="accent">to the Community</span>
+    </h1>
+
+    <p class="banner-sub">
+      Sidewalk Sunday School is a community outreach ministry dedicated to bringing hope, joy, and the love of Jesus directly into neighborhoods across the Columbus area — through free family events filled with worship, games, food, giveaways, and meaningful moments of connection.
+    </p>
+
+    <div class="btn-group banner-ctas">
+      <a href="#join-event" class="btn btn-red"><i class="fas fa-calendar-check"></i> Join the Next Event</a>
+      <a href="#volunteer"  class="btn btn-gold"><i class="fas fa-hands-helping"></i> Volunteer With Us</a>
+      <a href="#donate"     class="btn btn-outline"><i class="fas fa-heart"></i> Support the Outreach</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======== WHAT IS SWSS ======== -->
+<section class="what-is" id="about">
+  <div class="container">
+    <!-- Text -->
+    <div class="reveal reveal-left">
+      <div class="section-label wi-label"><i class="fas fa-circle-info"></i> What Is SWSS?</div>
+      <h2 class="wi-heading">More Than an Event.<br /><em>It's Ministry in Motion.</em></h2>
+      <p class="wi-body">Sidewalk Sunday School exists to reach children and families <strong>outside the four walls of the church.</strong> Through community events filled with fun, worship, encouragement, and practical support, we create opportunities for families to experience God's love in a real and personal way.</p>
+
+      <div class="wi-highlight">
+        <p>"Every event is designed to be welcoming, uplifting, and completely free for the community."</p>
+      </div>
+
+      <p class="wi-body">We believe the church belongs in every neighborhood — and Sidewalk Sunday School is how we live that out. Whether you're a first-time visitor or a regular face in the crowd, you are seen, loved, and welcome here.</p>
+
+      <div class="btn-group">
+        <a href="#join-event" class="btn btn-red"><i class="fas fa-calendar-check"></i> Join the Next Event</a>
+        <a href="#schedule"   class="btn btn-outline-dark"><i class="fas fa-calendar"></i> View Schedule</a>
+      </div>
+    </div>
+
+    <!-- Image stack -->
+    <div class="img-stack reveal reveal-right">
+      <img class="im" src="https://ik.imagekit.io/vddpcxj7e/whc/Smiling-boy-surrounded-by-friends.png?tr=f-auto,q-auto,w-700"   alt="Sidewalk Sunday School community event" loading="lazy" />
+      <img class="is" src="https://ik.imagekit.io/vddpcxj7e/vbs/ChatGPT Image Apr 29, 2026, 03_25_48 PM.png?tr=f-auto,q-auto,w-500" alt="Kids at SWSS event" loading="lazy" />
+      <img class="it" src="https://ik.imagekit.io/vddpcxj7e/vbs/F79A8898.JPG?tr=f-auto,q-auto,w-400"  alt="Kids celebrating" loading="lazy" />
+      <!-- <div class="stack-bubble"><strong>Free</strong>For Everyone</div> -->
+    </div>
+  </div>
+</section>
+
+<!-- ======== WHAT TO EXPECT ======== -->
+<section class="what-expect" id="expect">
+  <div class="sh-center container reveal">
+    <div class="section-label"><i class="fas fa-star"></i> Free for the Community</div>
+    <h2 class="sec-h" style="color:var(--white);">What to <span style="color:var(--gold);">Expect</span></h2>
+    <p class="sec-sub">Every Sidewalk Sunday School event is packed with activities designed to make families feel welcomed, fed, and filled with joy.</p>
+  </div>
+  <div class="container">
+    <div class="feat-grid stagger">
+      <div class="feat-card">
+        <div class="feat-ico" style="background:rgba(224,43,63,.14);color:var(--red);"><i class="fas fa-utensils"></i></div>
+        <div class="feat-title">Food &amp; Snacks</div>
+        <p class="feat-body">Fresh meals and snacks provided free for every family and child who attends.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico" style="background:rgba(201,168,76,.12);color:var(--gold);"><i class="fas fa-gamepad"></i></div>
+        <div class="feat-title">Games &amp; Activities</div>
+        <p class="feat-body">Inflatables, interactive games, fun competitions, and hands-on activities for all ages.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico" style="background:rgba(0,180,166,.12);color:var(--teal);"><i class="fas fa-gift"></i></div>
+        <div class="feat-title">Face Painting &amp; Giveaways</div>
+        <p class="feat-body">Exciting experiences and surprise giveaways that kids look forward to at every single event.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico" style="background:rgba(124,58,237,.12);color:var(--purple);"><i class="fas fa-music"></i></div>
+        <div class="feat-title">Worship &amp; Bible Moments</div>
+        <p class="feat-body">Faith-filled moments of worship and storytelling designed for children and families.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico" style="background:rgba(255,204,0,.12);color:var(--yellow);"><i class="fas fa-people-group"></i></div>
+        <div class="feat-title">Community Connection</div>
+        <p class="feat-body">A place where families feel truly seen, loved, encouraged, and connected to something greater.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== COMMUNITY IMPACT ======== -->
+<section class="impact" id="impact">
+  <div class="impact-bg"></div>
+  <div class="impact-overlay"></div>
+  <div class="container">
+    <div class="impact-inner">
+      <div class="impact-text reveal reveal-left">
+        <div class="section-label" style="color:var(--red);"><i class="fas fa-hands-holding-heart"></i> Community Impact</div>
+        <h2 class="impact-h">Reaching Families One<br /><em>Neighborhood at a Time</em></h2>
+        <p class="impact-body">Sidewalk Sunday School is about more than hosting events. It's about building relationships, serving communities, and creating moments where children and families encounter hope. We go where people are — into streets, schools, and neighborhoods — to bring the love of God to every family we meet.</p>
+        <blockquote class="impact-quote">
+          "Every smile, every conversation, every meal, and every prayer matters."
+        </blockquote>
+        <div class="btn-group">
+          <a href="#join-event" class="btn btn-red"><i class="fas fa-calendar-check"></i> Join the Next Event</a>
+          <a href="#volunteer"  class="btn btn-outline"><i class="fas fa-hands-helping"></i> Volunteer Today</a>
+        </div>
+      </div>
+
+      <div class="reveal reveal-right">
+        <div class="impact-stats stagger" style="margin-bottom:20px;">
+          <div class="stat-card">
+            <div class="stat-num">2×</div>
+            <div class="stat-lbl">Events Per Month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">100%</div>
+            <div class="stat-lbl">Free to Community</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">All</div>
+            <div class="stat-lbl">Ages Welcome</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">CBus</div>
+            <div class="stat-lbl">Area Neighborhoods</div>
+          </div>
+        </div>
+
+        <div class="impact-images">
+          <img class="ii-tall" src="https://ik.imagekit.io/vddpcxj7e/vbs/F79A8898.JPG?tr=f-auto,q-auto,w-600" alt="Community event" loading="lazy" />
+          <img class="ii-short" src="https://ik.imagekit.io/vddpcxj7e/vbs/DSC05172.jpg?tr=f-auto,q-auto,w-500" alt="Kids worship" loading="lazy" />
+          <img class="ii-short" src="https://ik.imagekit.io/vddpcxj7e/vbs/WHC.4.5.26-116.jpg?tr=f-auto,q-auto,w-500" alt="Kids celebrating" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== GALLERY STRIP ======== -->
+<div class="gallery-strip" aria-hidden="true">
+  <div class="gallery-track">
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/WHC.4.5.26-5.jpg?tr=f-auto,q-auto,w-460"          alt="" loading="lazy" />
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/ChatGPT%20Image%20Apr%2029%2C%202026%2C%2003_25_48%20PM.png?tr=f-auto,q-auto,w-460" alt="" loading="lazy" />
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/F79A8898.JPG?tr=f-auto,q-auto,w-460"              alt="" loading="lazy" />
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/DSC05172.jpg?tr=f-auto,q-auto,w-460"              alt="" loading="lazy" />
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/WHC.4.5.26-116.jpg?tr=f-auto,q-auto,w-460"        alt="" loading="lazy" />
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/Space%20camp%20fun%20with%20friends.png?tr=f-auto,q-auto,w-460" alt="" loading="lazy" />
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/Laughter%20and%20joy%20in%20a%20lively%20classroom.png?tr=f-auto,q-auto,w-460" alt="" loading="lazy" />
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/ChatGPT%20Image%20Apr%2029%2C%202026%2C%2003_30_27%20PM.png?tr=f-auto,q-auto,w-460" alt="" loading="lazy" />
+    <!-- Duplicate for seamless loop -->
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/WHC.4.5.26-5.jpg?tr=f-auto,q-auto,w-460"          alt="" loading="lazy" />
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/ChatGPT%20Image%20Apr%2029%2C%202026%2C%2003_25_48%20PM.png?tr=f-auto,q-auto,w-460" alt="" loading="lazy" />
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/F79A8898.JPG?tr=f-auto,q-auto,w-460"              alt="" loading="lazy" />
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/DSC05172.jpg?tr=f-auto,q-auto,w-460"              alt="" loading="lazy" />
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/WHC.4.5.26-116.jpg?tr=f-auto,q-auto,w-460"        alt="" loading="lazy" />
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/Space%20camp%20fun%20with%20friends.png?tr=f-auto,q-auto,w-460" alt="" loading="lazy" />
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/Laughter%20and%20joy%20in%20a%20lively%20classroom.png?tr=f-auto,q-auto,w-460" alt="" loading="lazy" />
+    <img src="https://ik.imagekit.io/vddpcxj7e/vbs/ChatGPT%20Image%20Apr%2029%2C%202026%2C%2003_30_27%20PM.png?tr=f-auto,q-auto,w-460" alt="" loading="lazy" />
+  </div>
+</div>
+
+<!-- ======== VOLUNTEER ======== -->
+<section class="volunteer" id="volunteer">
+  <div class="container">
+    <!-- Left: Text + roles + contact -->
+    <div class="reveal reveal-left">
+      <div class="section-label vol-label"><i class="fas fa-hands-helping"></i> Be Part of the Mission</div>
+      <h2 class="vol-h">Powered by<br /><em>Volunteers Like You</em></h2>
+      <p class="vol-body">Sidewalk Sunday School is powered by volunteers from every generation. Whether you serve once or every event, your impact is real and your presence matters. There is a place for everyone to serve — and we'd love to have you on the team.</p>
+
+      <div class="role-grid stagger">
+        <div class="role-pill"><i class="fas fa-music"></i>Worship Team</div>
+        <div class="role-pill"><i class="fas fa-box"></i>Setup &amp; Tear Down</div>
+        <div class="role-pill"><i class="fas fa-broom"></i>Clean Up Crew</div>
+        <div class="role-pill"><i class="fas fa-book-open"></i>Storytelling &amp; Skits</div>
+        <div class="role-pill"><i class="fas fa-gamepad"></i>Games &amp; Activities</div>
+        <div class="role-pill"><i class="fas fa-utensils"></i>Food Preparation</div>
+        <div class="role-pill"><i class="fas fa-bullhorn"></i>Community Outreach</div>
+        <div class="role-pill"><i class="fas fa-box-heart"></i>Donation &amp; Supply</div>
+        <div class="role-pill"><i class="fas fa-handshake-heart"></i>Hospitality</div>
+      </div>
+
+      <div class="vol-contact">
+        <h4><i class="fas fa-address-card" style="color:var(--red);margin-right:8px;"></i>Get Connected</h4>
+        <div class="contact-row">
+          <i class="fas fa-envelope"></i>
+          <span>Email us at <a href="mailto:SWSS@whc.life">SWSS@whc.life</a></span>
+        </div>
+        <div class="contact-row">
+          <i class="fas fa-phone"></i>
+          <span><a href="tel:6148371990">(614) 837-1990</a> ext. 1675</span>
+        </div>
+        <div class="contact-row">
+          <i class="fas fa-location-dot"></i>
+          <span>4595 Gender Rd., Canal Winchester, OH 43110</span>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <a href="mailto:SWSS@whc.life" class="btn btn-red"><i class="fas fa-hands-helping"></i> Join the Volunteer Team</a>
+        <a href="tel:6148371990"       class="btn btn-outline-dark"><i class="fas fa-phone"></i> Call Us</a>
+      </div>
+    </div>
+
+    <!-- Right: Image -->
+    <div class="vol-image reveal reveal-right">
+      <img src="https://ik.imagekit.io/vddpcxj7e/vbs/ChatGPT Image Apr 29, 2026, 03_28_03 PM.png?tr=f-auto,q-auto,w-800" alt="Volunteers serving at Sidewalk Sunday School" loading="lazy" />
+      <p class="vol-image-caption">"Whether you serve once or every event, your impact matters."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======== EVENT SCHEDULE ======== -->
+<section class="schedule" id="schedule">
+  <div class="container">
+    <div class="sched-header reveal">
+      <div>
+        <div class="section-label" style="color:var(--gold);"><i class="fas fa-calendar-star"></i> Upcoming SWSS Events</div>
+        <h2 class="sched-h">Mark Your<br /><em>Calendar</em></h2>
+        <p class="sched-sub">Sidewalk Sunday School takes place twice a month. Check back regularly for updated locations, schedules, and registration details.</p>
+      </div>
+      <a href="#join-event" class="btn btn-red" id="join-event"><i class="fas fa-calendar-plus"></i> View Upcoming Events</a>
+    </div>
+
+    <div class="sched-list stagger">
+
+      <div class="sched-item">
+        <div class="sched-date-box">
+          <div class="sdate-month">Jun</div>
+          <div class="sdate-day">6</div>
+          <div class="sdate-year">2026</div>
+        </div>
+        <div class="sched-info">
+          <div class="sched-name">Sidewalk Sunday School</div>
+          <div class="sched-loc"><i class="fas fa-location-dot fa-xs"></i> World Harvest Church · 4595 Gender Rd, Canal Winchester, OH 43110</div>
+        </div>
+        <div class="sched-badge">Free Event</div>
+      </div>
+
+      <div class="sched-item">
+        <div class="sched-date-box">
+          <div class="sdate-month">Jun</div>
+          <div class="sdate-day">20</div>
+          <div class="sdate-year">2026</div>
+        </div>
+        <div class="sched-info">
+          <div class="sched-name">Sidewalk Sunday School</div>
+          <div class="sched-loc"><i class="fas fa-location-dot fa-xs"></i> Binns Elementary · 1080 Binns Blvd, Columbus, OH 43204</div>
+        </div>
+        <div class="sched-badge">Community</div>
+      </div>
+
+      <div class="sched-item">
+        <div class="sched-date-box">
+          <div class="sdate-month">Aug</div>
+          <div class="sdate-day">1</div>
+          <div class="sdate-year">2026</div>
+        </div>
+        <div class="sched-info">
+          <div class="sched-name">Sidewalk Sunday School</div>
+          <div class="sched-loc"><i class="fas fa-location-dot fa-xs"></i> World Harvest Church · 4595 Gender Rd, Canal Winchester, OH 43110</div>
+        </div>
+        <div class="sched-badge">Free Event</div>
+      </div>
+
+      <div class="sched-item">
+        <div class="sched-date-box">
+          <div class="sdate-month">Sep</div>
+          <div class="sdate-day">5</div>
+          <div class="sdate-year">2026</div>
+        </div>
+        <div class="sched-info">
+          <div class="sched-name">Sidewalk Sunday School</div>
+          <div class="sched-loc"><i class="fas fa-location-dot fa-xs"></i> World Harvest Church · 4595 Gender Rd, Canal Winchester, OH 43110</div>
+        </div>
+        <div class="sched-badge">Free Event</div>
+      </div>
+
+      <div class="sched-item">
+        <div class="sched-date-box">
+          <div class="sdate-month">Oct</div>
+          <div class="sdate-day">3</div>
+          <div class="sdate-year">2026</div>
+        </div>
+        <div class="sched-info">
+          <div class="sched-name">Sidewalk Sunday School</div>
+          <div class="sched-loc"><i class="fas fa-location-dot fa-xs"></i> World Harvest Church · 4595 Gender Rd, Canal Winchester, OH 43110</div>
+        </div>
+        <div class="sched-badge">Free Event</div>
+      </div>
+
+      <div class="sched-item">
+        <div class="sched-date-box">
+          <div class="sdate-month">Nov</div>
+          <div class="sdate-day">7</div>
+          <div class="sdate-year">2026</div>
+        </div>
+        <div class="sched-info">
+          <div class="sched-name">Sidewalk Sunday School</div>
+          <div class="sched-loc"><i class="fas fa-location-dot fa-xs"></i> World Harvest Church · 4595 Gender Rd, Canal Winchester, OH 43110</div>
+        </div>
+        <div class="sched-badge">Free Event</div>
+      </div>
+
+      <div class="sched-item">
+        <div class="sched-date-box">
+          <div class="sdate-month">Dec</div>
+          <div class="sdate-day">5</div>
+          <div class="sdate-year">2026</div>
+        </div>
+        <div class="sched-info">
+          <div class="sched-name">Sidewalk Sunday School</div>
+          <div class="sched-loc"><i class="fas fa-location-dot fa-xs"></i> World Harvest Church · 4595 Gender Rd, Canal Winchester, OH 43110</div>
+        </div>
+        <div class="sched-badge">Free Event</div>
+      </div>
+
+    </div>
+
+    <div class="btn-group reveal">
+      <a href="mailto:SWSS@whc.life" class="btn btn-red"><i class="fas fa-calendar-plus"></i> Register for an Event</a>
+      <a href="tel:6148371990"       class="btn btn-outline"><i class="fas fa-phone"></i> Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======== PHOTO / VIDEO SECTION ======== -->
+<section class="media-section" id="media">
+  <div class="sh-center container reveal" style="margin-bottom:44px;">
+    <div class="section-label"><i class="fas fa-photo-film"></i> See the Impact</div>
+    <h2 class="media-section-h">Experience Sidewalk<br /><em>Sunday School</em></h2>
+    <p class="media-sub">Photos, worship highlights, testimonies, and outreach recaps from past Sidewalk Sunday School events.</p>
+  </div>
+
+  <div class="container">
+    <div class="media-grid reveal">
+      <!-- YouTube embed -->
+      <div class="media-video-wrap">
+        <iframe
+          src="https://www.youtube.com/embed/videoseries?list=PLqRUf6_IlNf32yZ2D139cOg9lqVN_Fwlr"
+          title="Sidewalk Sunday School Videos"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+
+      <!-- Photo mosaic -->
+      <div class="media-photo-grid">
+        <img class="span2" src="https://ik.imagekit.io/vddpcxj7e/vbs/ChatGPT Image Apr 29, 2026, 03_25_48 PM.png?tr=f-auto,q-auto,w-800" alt="Sidewalk Sunday School event" loading="lazy" />
+        <img src="https://ik.imagekit.io/vddpcxj7e/vbs/WHC.4.5.26-5.jpg?tr=f-auto,q-auto,w-400"  alt="SWSS community" loading="lazy" />
+        <img src="https://ik.imagekit.io/vddpcxj7e/vbs/F79A8898.JPG?tr=f-auto,q-auto,w-400"      alt="Kids at SWSS"   loading="lazy" />
+      </div>
+    </div>
+
+    <div class="btn-group yt-ctas reveal" style="justify-content:center;">
+      <a href="https://www.youtube.com/@WHCKidHarvest" class="btn btn-red" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> Watch Videos</a>
+      <a href="kids-harvest.html#media"                class="btn btn-outline"><i class="fas fa-images"></i> View Gallery</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======== DONATE ======== -->
+<section class="donate" id="donate">
+  <div class="container reveal" style="position:relative;z-index:1;">
+    <div class="donate-icon"><i class="fas fa-heart"></i></div>
+    <h2 class="donate-h">Help Us Reach<br /><em>More Families</em></h2>
+    <p class="donate-sub">Every donation helps provide meals, supplies, games, giveaways, and outreach opportunities for children and families in our community.</p>
+    <p class="donate-quote">"Together, we can continue bringing hope beyond the church walls."</p>
+    <div class="fc-btns">
+      <a href="https://v4.whc.life/donate" class="btn btn-gold" target="_blank" rel="noopener"><i class="fas fa-hand-holding-heart"></i> Support the Outreach</a>
+      <a href="mailto:SWSS@whc.life"       class="btn btn-outline"><i class="fas fa-envelope"></i> Contact the Team</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======== FINAL CTA ======== -->
+<section class="final-cta">
+  <div class="container reveal" style="position:relative;z-index:1;">
+    <div class="section-label" style="display:block;text-align:center;margin-bottom:16px;"><i class="fas fa-star"></i> Everyone Is Welcome</div>
+    <h2 class="fc-h">Faith. Fun.<br /><em>Community. Outreach.</em></h2>
+    <p class="fc-sub">Whether you're attending, volunteering, donating, or bringing your family — there's a place for you at Sidewalk Sunday School. Come experience faith, fun, and community together.</p>
+    <div class="fc-btns">
+      <a href="#join-event"         class="btn btn-gold"><i class="fas fa-calendar-check"></i> Attend an Event</a>
+      <a href="#volunteer"          class="btn btn-red"><i class="fas fa-hands-helping"></i> Volunteer Today</a>
+      <a href="https://v4.whc.life/donate" class="btn btn-outline" target="_blank" rel="noopener"><i class="fas fa-heart"></i> Donate Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======== FOOTER ======== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <!-- Brand -->
+      <div class="footer-brand">
+        <img src="https://elro-images.s3.us-east-2.amazonaws.com/tosm/WHC+Wheat+Logo+(1).png" alt="WHC Logo" />
+        <p>A house of prayer and healing for the nations.<br />Miracles · Breakthrough · Revival.</p>
+        <div class="socials">
+          <a href="https://www.facebook.com/rodparsley"  class="social-btn" target="_blank" rel="noopener" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/rodparsley" class="social-btn" target="_blank" rel="noopener" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://x.com/RealRodParsley"         class="social-btn" target="_blank" rel="noopener" title="X / Twitter"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://www.youtube.com/@rodparsley"  class="social-btn" target="_blank" rel="noopener" title="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <!-- Sidewalk links -->
+      <div class="footer-col">
+        <h5>Sidewalk SS</h5>
+        <ul>
+          <li><a href="#about">About SWSS</a></li>
+          <li><a href="#expect">What to Expect</a></li>
+          <li><a href="#impact">Community Impact</a></li>
+          <li><a href="#volunteer">Volunteer</a></li>
+          <li><a href="#schedule">Event Schedule</a></li>
+          <li><a href="#media">Watch Videos</a></li>
+          <li><a href="#donate">Support the Outreach</a></li>
+        </ul>
+      </div>
+
+      <!-- Kids Harvest -->
+      <div class="footer-col">
+        <h5>Kids Harvest</h5>
+        <ul>
+          <li><a href="kids-harvest.html">Kids Harvest Home</a></li>
+          <li><a href="kids-harvest.html#max-me">Max &amp; Me</a></li>
+          <li><a href="gen-h-678.html">GEN H 678</a></li>
+          <li><a href="https://www.youtube.com/@WHCKidHarvest">Watch Online</a></li>
+          <li><a href="kids-harvest.html#parents">For Parents</a></li>
+        </ul>
+      </div>
+
+      <!-- Connect -->
+      <div class="footer-col">
+        <h5>Connect</h5>
+        <ul>
+          <li><a href="https://fmuindi.github.io/whc-2/">WHC Home</a></li>
+          <li><a href="https://www.youtube.com/@rodparsley/streams">Watch Live</a></li>
+          <li><a href="https://v4.whc.life/donate">Give Online</a></li>
+          <li><a href="mailto:SWSS@whc.life">SWSS@whc.life</a></li>
+          <li><a href="tel:6148371990">(614) 837-1990 ext 1675</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 World Harvest Church · All rights reserved · <a href="https://whc.life/privacy-policy" style="color:var(--gold);">Privacy Policy</a></span>
+      <span>
+        <a href="https://maps.app.goo.gl/6sUwTmPKDDXbqZ5n8" target="_blank" rel="noopener">4595 Gender Rd. Canal Winchester, OH 43110</a>
+        &nbsp;·&nbsp;
+        <a href="tel:6148371990">(614) 837-1990</a>
+      </span>
+    </div>
+    <div class="footer-tagline">Sidewalk Sunday School · Faith. Fun. Community. Outreach.</div>
+  </div>
+</footer>
+
+<!-- ======== SCRIPTS ======== -->
+<script>
+/* --- Mobile drawer --- */
+const hamBtn        = document.getElementById('hamBtn');
+const mobileDrawer  = document.getElementById('mobileDrawer');
+const drawerOverlay = document.getElementById('drawerOverlay');
+const drawerClose   = document.getElementById('drawerClose');
+const drawerLinks   = document.querySelectorAll('.drawer-links a');
+
+function openDrawer()  {
+  mobileDrawer.classList.add('is-open');
+  drawerOverlay.classList.add('is-open');
+  hamBtn.classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDrawer() {
+  mobileDrawer.classList.remove('is-open');
+  drawerOverlay.classList.remove('is-open');
+  hamBtn.classList.remove('is-open');
+  document.body.style.overflow = '';
+}
+hamBtn.addEventListener('click', () =>
+  mobileDrawer.classList.contains('is-open') ? closeDrawer() : openDrawer()
+);
+drawerClose.addEventListener('click', closeDrawer);
+drawerOverlay.addEventListener('click', closeDrawer);
+drawerLinks.forEach(a => a.addEventListener('click', closeDrawer));
+
+/* --- Floating particles --- */
+(function() {
+  const box    = document.getElementById('particleBox');
+  const colors = ['#e02b3f','#ffcc00','#00b4a6','#7c3aed','#c9a84c','#ffffff'];
+  for (let i = 0; i < 18; i++) {
+    const p   = document.createElement('span');
+    const sz  = Math.random() * 9 + 4;
+    const dur = 8 + Math.random() * 12;
+    p.className = 'particle';
+    Object.assign(p.style, {
+      width:             `${sz}px`,
+      height:            `${sz}px`,
+      background:        colors[Math.floor(Math.random() * colors.length)],
+      left:              `${Math.random() * 100}%`,
+      bottom:            `${Math.random() * 40}%`,
+      animationDuration: `${dur}s`,
+      animationDelay:    `-${Math.random() * dur}s`,
+      opacity:           '.5'
+    });
+    box.appendChild(p);
+  }
+})();
+
+/* --- Scroll-reveal --- */
+(function() {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal, .stagger').forEach(el => io.observe(el));
+})();
+
+/* --- Sticky nav darkens on scroll --- */
+const mainNav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  mainNav.style.background = window.scrollY > 50
+    ? 'rgba(13,13,13,.98)'
+    : 'rgba(13,13,13,.94)';
+}, { passive: true });
+</script>
+</body>
+</html>
